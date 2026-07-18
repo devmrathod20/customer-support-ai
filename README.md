@@ -11,19 +11,15 @@
 
 ## Home Screen
 
-![Home](screenshots/home.png)
+![Home](screenshots/home1.png)
+![Home](screenshots/home2.png)
 
 ---
 
 ## Chat Interface
 
-![Chat](screenshots/chat.png)
-
----
-
-## Sidebar
-
-![Sidebar](screenshots/sidebar.png)
+![Chat](screenshots/chat1.png)
+![Chat](screenshots/chat2.png)
 
 ---
 
