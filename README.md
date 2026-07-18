@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🤖 Customer Support AI Chatbot
 
 > An AI-powered Customer Support Chatbot built using **Python**, **Streamlit**, **n8n**, and **Amazon Bedrock** to automate customer service tasks like order tracking, refund inquiries, return policies, and support assistance through intelligent workflow automation.
@@ -363,3 +364,7 @@ https://github.com/devmrathod20
 ---
 
 ## ⭐ If you found this project helpful, please consider giving it a Star!
+=======
+# customer-support-ai
+AI-powered Customer Support Chatbot using Streamlit, n8n &amp; Amazon Bedrock
+>>>>>>> 952a65110001a43ff91e72c1c95a4f6a7a487c88
