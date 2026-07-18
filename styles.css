@@ -1,0 +1,1654 @@
+/* =========================================================
+   CUSTOMER SUPPORT AI
+   Premium SaaS Theme
+   Version 2.0
+========================================================= */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* =========================================================
+   ROOT COLORS
+========================================================= */
+
+:root{
+
+--bg:#09090B;
+--bg-secondary:#111827;
+--glass:rgba(255,255,255,.06);
+--glass-border:rgba(255,255,255,.08);
+
+--primary:#7C3AED;
+--secondary:#2563EB;
+--accent:#06B6D4;
+
+--text:#F8FAFC;
+--muted:#94A3B8;
+
+--success:#22C55E;
+--danger:#EF4444;
+
+--radius:24px;
+
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Inter",sans-serif;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+background:var(--bg);
+
+color:var(--text);
+
+}
+
+/* =========================================================
+   STREAMLIT
+========================================================= */
+
+.stApp{
+
+background:
+radial-gradient(circle at top left,#312E81 0%,transparent 35%),
+radial-gradient(circle at bottom right,#1D4ED8 0%,transparent 35%),
+linear-gradient(180deg,#09090B,#111827);
+
+background-attachment:fixed;
+
+color:white;
+
+}
+
+/* Remove Streamlit header */
+
+header{
+
+visibility:hidden;
+
+}
+
+footer{
+
+visibility:hidden;
+
+}
+
+#MainMenu{
+
+visibility:hidden;
+
+}
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.block-container{
+
+max-width:1200px;
+
+padding-top:30px;
+
+padding-left:45px;
+
+padding-right:45px;
+
+padding-bottom:120px;
+
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+[data-testid="stSidebar"]{
+
+background:
+rgba(12,18,33,.88);
+
+backdrop-filter:blur(30px);
+
+border-right:
+
+1px solid rgba(255,255,255,.08);
+
+}
+
+[data-testid="stSidebar"] *{
+
+color:white;
+
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+padding:45px;
+
+border-radius:32px;
+
+background:
+
+linear-gradient(
+135deg,
+rgba(124,58,237,.25),
+rgba(37,99,235,.20)
+);
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(30px);
+
+margin-bottom:30px;
+
+position:relative;
+
+overflow:hidden;
+
+animation:fadeUp .7s ease;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:380px;
+height:380px;
+
+right:-120px;
+top:-120px;
+
+border-radius:50%;
+
+background:
+
+rgba(255,255,255,.05);
+
+filter:blur(30px);
+
+}
+
+.hero h1{
+
+font-size:52px;
+
+font-weight:800;
+
+letter-spacing:-1px;
+
+color:white;
+
+margin-bottom:15px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+color:#CBD5E1;
+
+line-height:1.8;
+
+max-width:700px;
+
+}
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.status{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:10px 18px;
+
+margin-top:25px;
+
+border-radius:999px;
+
+background:
+
+rgba(34,197,94,.15);
+
+border:
+
+1px solid rgba(34,197,94,.35);
+
+font-size:14px;
+
+font-weight:600;
+
+color:#DCFCE7;
+
+}
+
+.status::before{
+
+content:"";
+
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:#22C55E;
+
+animation:pulse 2s infinite;
+
+}
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.glass-card{
+
+background:var(--glass);
+
+border:1px solid var(--glass-border);
+
+border-radius:24px;
+
+padding:24px;
+
+backdrop-filter:blur(20px);
+
+transition:.35s ease;
+
+margin-bottom:20px;
+
+}
+
+.glass-card:hover{
+
+transform:translateY(-4px);
+
+border-color:
+
+rgba(124,58,237,.35);
+
+box-shadow:
+
+0 20px 45px rgba(124,58,237,.18);
+
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(.9);
+
+opacity:.5;
+
+}
+
+50%{
+
+transform:scale(1.2);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:scale(.9);
+
+opacity:.5;
+
+}
+
+}
+/* =========================================================
+   CHAT AREA
+========================================================= */
+
+.chat-wrapper{
+
+display:flex;
+flex-direction:column;
+gap:18px;
+margin-top:20px;
+margin-bottom:120px;
+
+}
+
+/* =========================================================
+   CHAT MESSAGE
+========================================================= */
+
+.user-message,
+.bot-message{
+
+max-width:78%;
+padding:18px 22px;
+border-radius:24px;
+font-size:15px;
+line-height:1.8;
+animation:fadeUp .35s ease;
+word-wrap:break-word;
+box-shadow:
+0 8px 25px rgba(0,0,0,.18);
+
+}
+
+/* =========================================================
+   USER MESSAGE
+========================================================= */
+
+.user-message{
+
+margin-left:auto;
+
+background:
+linear-gradient(
+135deg,
+#7C3AED,
+#2563EB
+);
+
+color:white;
+
+border-bottom-right-radius:8px;
+
+}
+
+/* =========================================================
+   BOT MESSAGE
+========================================================= */
+
+.bot-message{
+
+margin-right:auto;
+
+background:
+rgba(255,255,255,.06);
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+color:white;
+
+border-bottom-left-radius:8px;
+
+}
+
+/* =========================================================
+   CHAT AVATAR
+========================================================= */
+
+.avatar{
+
+width:42px;
+height:42px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:18px;
+
+font-weight:700;
+
+background:
+
+linear-gradient(
+135deg,
+#7C3AED,
+#2563EB
+);
+
+color:white;
+
+flex-shrink:0;
+
+}
+
+/* =========================================================
+   MESSAGE ROW
+========================================================= */
+
+.message-row{
+
+display:flex;
+
+gap:15px;
+
+align-items:flex-end;
+
+margin-bottom:15px;
+
+}
+
+.message-row.user{
+
+justify-content:flex-end;
+
+}
+
+/* =========================================================
+   FLOATING INPUT
+========================================================= */
+
+[data-testid="stChatInput"]{
+
+position:fixed;
+
+left:50%;
+
+transform:translateX(-50%);
+
+bottom:25px;
+
+width:min(900px,82%);
+
+background:
+
+rgba(15,23,42,.88);
+
+backdrop-filter:blur(28px);
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+border-radius:999px;
+
+padding:12px 18px;
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.35);
+
+z-index:999;
+
+transition:.35s;
+
+}
+
+/* =========================================================
+   CHAT INPUT BOX
+========================================================= */
+
+[data-testid="stChatInput"] textarea{
+
+background:transparent !important;
+
+color:white !important;
+
+font-size:16px !important;
+
+border:none !important;
+
+box-shadow:none !important;
+
+resize:none !important;
+
+}
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+[data-testid="stChatInput"] textarea::placeholder{
+
+color:#94A3B8 !important;
+
+}
+
+/* =========================================================
+   INPUT FOCUS
+========================================================= */
+
+[data-testid="stChatInput"]{
+
+transition:.3s;
+
+}
+
+[data-testid="stChatInput"]:focus-within{
+
+border:
+
+1px solid rgba(124,58,237,.7);
+
+box-shadow:
+
+0 0 0 2px rgba(124,58,237,.20),
+0 18px 45px rgba(124,58,237,.30);
+
+}
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+[data-testid="stChatInput"] button{
+
+border-radius:50% !important;
+
+width:46px !important;
+
+height:46px !important;
+
+background:
+
+linear-gradient(
+135deg,
+#7C3AED,
+#2563EB
+);
+
+border:none !important;
+
+transition:.3s;
+
+}
+
+[data-testid="stChatInput"] button:hover{
+
+transform:scale(1.08);
+
+box-shadow:
+
+0 10px 25px rgba(124,58,237,.35);
+
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.stButton>button{
+
+width:100%;
+
+height:52px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+
+linear-gradient(
+135deg,
+#7C3AED,
+#2563EB
+);
+
+color:white;
+
+font-weight:600;
+
+font-size:15px;
+
+transition:.3s;
+
+box-shadow:
+
+0 10px 20px rgba(37,99,235,.25);
+
+}
+
+.stButton>button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 18px 35px rgba(37,99,235,.35);
+
+}
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+[data-testid="stDownloadButton"] button{
+
+width:100%;
+
+height:52px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+
+linear-gradient(
+135deg,
+#0891B2,
+#2563EB
+);
+
+color:white;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+[data-testid="stDownloadButton"] button:hover{
+
+transform:translateY(-3px);
+
+}
+
+/* =========================================================
+   METRIC CARD
+========================================================= */
+
+.metric-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:22px;
+
+border-radius:24px;
+
+background:
+
+rgba(255,255,255,.05);
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+transition:.3s;
+
+}
+
+.metric-card:hover{
+
+transform:translateY(-4px);
+
+border-color:#7C3AED;
+
+box-shadow:
+
+0 15px 35px rgba(124,58,237,.18);
+
+}
+
+.metric-title{
+
+font-size:14px;
+
+color:#94A3B8;
+
+}
+
+.metric-value{
+
+font-size:28px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+.metric-icon{
+
+font-size:28px;
+
+}
+/* =========================================================
+   QUICK ACTION CARDS
+========================================================= */
+
+.quick-card{
+
+display:flex;
+align-items:center;
+gap:16px;
+
+padding:18px;
+
+margin-bottom:16px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+backdrop-filter:blur(20px);
+
+transition:all .35s ease;
+
+cursor:pointer;
+
+}
+
+.quick-card:hover{
+
+transform:translateY(-4px);
+
+border-color:#7C3AED;
+
+box-shadow:
+0 15px 35px rgba(124,58,237,.18);
+
+}
+
+.quick-icon{
+
+width:52px;
+height:52px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+135deg,
+#7C3AED,
+#2563EB
+);
+
+font-size:24px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+
+.quick-text{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.quick-title{
+
+font-size:16px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+.quick-desc{
+
+font-size:13px;
+
+color:#94A3B8;
+
+margin-top:4px;
+
+line-height:1.5;
+
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:8px 16px;
+
+border-radius:999px;
+
+font-size:13px;
+
+font-weight:600;
+
+background:
+rgba(34,197,94,.12);
+
+border:
+1px solid rgba(34,197,94,.35);
+
+color:#DCFCE7;
+
+}
+
+/* =========================================================
+   TYPING INDICATOR
+========================================================= */
+
+.typing{
+
+display:flex;
+
+gap:6px;
+
+padding:8px;
+
+align-items:center;
+
+}
+
+.typing span{
+
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:#7C3AED;
+
+animation:typing 1.3s infinite;
+
+}
+
+.typing span:nth-child(2){
+
+animation-delay:.2s;
+
+}
+
+.typing span:nth-child(3){
+
+animation-delay:.4s;
+
+}
+
+@keyframes typing{
+
+0%{
+
+opacity:.3;
+
+transform:translateY(0);
+
+}
+
+50%{
+
+opacity:1;
+
+transform:translateY(-6px);
+
+}
+
+100%{
+
+opacity:.3;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* =========================================================
+   SHIMMER LOADER
+========================================================= */
+
+.shimmer{
+
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.10),
+rgba(255,255,255,.03)
+);
+
+background-size:400% 100%;
+
+animation:shimmer 2s linear infinite;
+
+}
+
+@keyframes shimmer{
+
+0%{
+
+background-position:100%;
+
+}
+
+100%{
+
+background-position:-100%;
+
+}
+
+}
+
+/* =========================================================
+   CODE BLOCKS
+========================================================= */
+
+pre{
+
+border-radius:18px !important;
+
+border:1px solid rgba(255,255,255,.08);
+
+background:#0F172A !important;
+
+padding:18px !important;
+
+}
+
+code{
+
+font-size:14px !important;
+
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+}
+
+th{
+
+background:rgba(255,255,255,.06);
+
+padding:14px;
+
+text-align:left;
+
+color:white;
+
+}
+
+td{
+
+padding:14px;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+color:#CBD5E1;
+
+}
+
+/* =========================================================
+   EXPANDERS
+========================================================= */
+
+details{
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:18px;
+
+border:1px solid rgba(255,255,255,.08);
+
+padding:10px;
+
+}
+
+.streamlit-expanderHeader{
+
+font-weight:700;
+
+color:white;
+
+}
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+[data-testid="stAlert"]{
+
+border-radius:18px;
+
+border:none;
+
+backdrop-filter:blur(20px);
+
+}
+
+/* =========================================================
+   TOASTS
+========================================================= */
+
+.toast{
+
+padding:16px 18px;
+
+border-radius:18px;
+
+margin:15px 0;
+
+font-size:15px;
+
+font-weight:500;
+
+animation:fadeUp .35s ease;
+
+}
+
+.toast-success{
+
+background:
+rgba(34,197,94,.12);
+
+border:
+1px solid rgba(34,197,94,.30);
+
+color:#DCFCE7;
+
+}
+
+.toast-error{
+
+background:
+rgba(239,68,68,.12);
+
+border:
+1px solid rgba(239,68,68,.30);
+
+color:#FECACA;
+
+}
+
+.toast-info{
+
+background:
+rgba(37,99,235,.12);
+
+border:
+1px solid rgba(37,99,235,.30);
+
+color:#DBEAFE;
+
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+margin-top:60px;
+
+padding:30px;
+
+text-align:center;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+color:#94A3B8;
+
+font-size:14px;
+
+}
+
+.footer strong{
+
+color:white;
+
+}
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a{
+
+color:#A78BFA;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+a:hover{
+
+color:white;
+
+}
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media screen and (max-width:1200px){
+
+.block-container{
+
+padding-left:30px;
+padding-right:30px;
+
+}
+
+.hero h1{
+
+font-size:46px;
+
+}
+
+}
+
+/* Tablet */
+
+@media screen and (max-width:992px){
+
+.hero{
+
+padding:35px;
+
+}
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+}
+
+.user-message,
+.bot-message{
+
+max-width:90%;
+
+}
+
+.metric-card{
+
+margin-bottom:15px;
+
+}
+
+.quick-card{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+}
+
+/* Mobile */
+
+@media screen and (max-width:768px){
+
+.block-container{
+
+padding-left:18px;
+padding-right:18px;
+padding-top:20px;
+padding-bottom:120px;
+
+}
+
+.hero{
+
+padding:28px;
+border-radius:24px;
+
+}
+
+.hero h1{
+
+font-size:32px;
+line-height:1.2;
+
+}
+
+.hero p{
+
+font-size:15px;
+
+}
+
+.status{
+
+font-size:13px;
+
+padding:8px 14px;
+
+}
+
+.user-message,
+.bot-message{
+
+max-width:100%;
+
+font-size:15px;
+
+padding:16px;
+
+}
+
+.avatar{
+
+width:36px;
+height:36px;
+
+font-size:16px;
+
+}
+
+.quick-card{
+
+padding:16px;
+
+}
+
+.quick-icon{
+
+width:46px;
+height:46px;
+
+font-size:20px;
+
+}
+
+.stButton>button{
+
+height:48px;
+
+font-size:14px;
+
+}
+
+[data-testid="stChatInput"]{
+
+width:95%;
+
+bottom:15px;
+
+padding:10px 15px;
+
+}
+
+}
+
+/* Small Mobile */
+
+@media screen and (max-width:480px){
+
+.hero{
+
+padding:22px;
+
+}
+
+.hero h1{
+
+font-size:26px;
+
+}
+
+.hero p{
+
+font-size:14px;
+
+}
+
+.metric-value{
+
+font-size:22px;
+
+}
+
+.metric-icon{
+
+font-size:22px;
+
+}
+
+}
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+height:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#111827;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(
+180deg,
+#7C3AED,
+#2563EB
+);
+
+border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:linear-gradient(
+180deg,
+#8B5CF6,
+#3B82F6
+);
+
+}
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection{
+
+background:#7C3AED;
+
+color:white;
+
+}
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
+img{
+
+border-radius:18px;
+
+}
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+.text-center{
+
+text-align:center;
+
+}
+
+.mt-10{
+
+margin-top:10px;
+
+}
+
+.mt-20{
+
+margin-top:20px;
+
+}
+
+.mt-30{
+
+margin-top:30px;
+
+}
+
+.mb-10{
+
+margin-bottom:10px;
+
+}
+
+.mb-20{
+
+margin-bottom:20px;
+
+}
+
+.mb-30{
+
+margin-bottom:30px;
+
+}
+
+.w-100{
+
+width:100%;
+
+}
+
+.rounded{
+
+border-radius:24px;
+
+}
+
+.glow{
+
+box-shadow:
+0 0 35px rgba(124,58,237,.18);
+
+}
+
+.hover-scale{
+
+transition:.3s;
+
+}
+
+.hover-scale:hover{
+
+transform:scale(1.02);
+
+}
+
+.fade{
+
+animation:fadeUp .5s ease;
+
+}
+
+/* =========================================================
+   STREAMLIT CHAT POLISH
+========================================================= */
+
+[data-testid="stChatMessage"]{
+
+background:transparent !important;
+
+border:none !important;
+
+padding:0 !important;
+
+margin-bottom:15px !important;
+
+}
+
+[data-testid="stMarkdownContainer"] p{
+
+line-height:1.8;
+
+}
+
+/* =========================================================
+   INPUT PLACEHOLDER ANIMATION
+========================================================= */
+
+[data-testid="stChatInput"]{
+
+animation:floatUp .5s ease;
+
+}
+
+@keyframes floatUp{
+
+from{
+
+transform:translate(-50%,40px);
+
+opacity:0;
+
+}
+
+to{
+
+transform:translate(-50%,0);
+
+opacity:1;
+
+}
+
+}
+
+/* =========================================================
+   GLASS BORDER GLOW
+========================================================= */
+
+.glass-card::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+pointer-events:none;
+
+border-radius:24px;
+
+padding:1px;
+
+background:
+linear-gradient(
+135deg,
+rgba(124,58,237,.25),
+rgba(37,99,235,.15),
+transparent
+);
+
+-webkit-mask:
+linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+
+-webkit-mask-composite:xor;
+
+mask-composite:exclude;
+
+opacity:.8;
+
+}
+
+/* =========================================================
+   FINAL POLISH
+========================================================= */
+
+.glass-card,
+.metric-card,
+.quick-card,
+.hero{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.glass-card:hover,
+.metric-card:hover,
+.quick-card:hover{
+
+transition:all .35s ease;
+
+}
+
+/* =========================================================
+   END OF FILE
+========================================================= */
