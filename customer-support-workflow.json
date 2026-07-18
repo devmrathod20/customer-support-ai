@@ -1,0 +1,544 @@
+{
+  "name": "code",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05e3093d-bf7d-42f7-b6fa-cb4cec4e1349",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        464
+      ],
+      "id": "5fed0bbd-41ee-4b9f-8366-d9f898f1c632",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer Query:\n\n{{ $('Edit Fields').item.json.message }}\n\nOrder Information:\n\nOrder ID: {{ $json[\"Order ID\"] }}\nCustomer Name: {{ $json[\"Customer Name\"] }}\nProduct: {{ $json[\"Product\"] }}\nOrder Status: {{ $json[\"Order Status\"] }}\nPayment Status: {{ $json[\"Payment Status\"] }}\nDelivery Date: {{ $json[\"Delivery Date\"] }}\nTracking ID: {{ $json[\"Tracking ID\"] }}\nCity: {{ $json[\"City\"] }}\n\nAnswer the customer's question using only the information above.\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a professional customer support representative.\n\nRules:\n\n* Use only the provided order information.\n* Answer the customer's question directly.\n* If an Order ID is provided and a matching order is found, immediately provide the relevant order details.\n* Do not ask what information the customer needs.\n* Do not invent information.\n* Be polite, concise, and professional.\n* Do not mention databases, sheets, systems, or AI.\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1696,
+        0
+      ],
+      "id": "99ace0b3-b7f4-47e9-904f-b698ba670e66",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "4314628a-8a73-4fb4-8c44-8f9fb287dace",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        464
+      ],
+      "id": "17003f1d-39a6-4dd0-8d98-b8e4e8194872",
+      "name": "Webhook",
+      "webhookId": "4314628a-8a73-4fb4-8c44-8f9fb287dace"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2048,
+        112
+      ],
+      "id": "78520b58-7783-4390-830f-f1dd4d09f1f7",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "amazon.nova-lite-v1:0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        1776,
+        224
+      ],
+      "id": "3a4646a0-b4f7-4f79-bddb-2b95512c205d",
+      "name": "AWS Bedrock Chat Model"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1FffyNfObzcP33yLX2z5pM3vvv2lnlUQ_1bPkighyYvQ",
+          "mode": "list",
+          "cachedResultName": "chatbot demo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FffyNfObzcP33yLX2z5pM3vvv2lnlUQ_1bPkighyYvQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FffyNfObzcP33yLX2z5pM3vvv2lnlUQ_1bPkighyYvQ/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Order ID",
+              "lookupValue": "={{$json.orderId}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        304
+      ],
+      "id": "9de6582d-0198-47ab-b0b9-70c284724e8a",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "9rn9Nl4Dj7pOaocX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const message = $json.message || \"\";\n\nconst match = message.match(/\\b\\d{5}\\b/);\n\nreturn [{\n  json: {\n    message,\n    orderId: match ? match[0] : null\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        464
+      ],
+      "id": "36dbe760-24a4-4979-9ace-86112c4ea1f3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4be05978-5526-4bf9-95fa-86e93d4b9986",
+              "leftValue": "={{ $json.orderId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        464
+      ],
+      "id": "a1d3df8d-58ee-4a1a-9cec-0fe8c9458eb2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer Message:\n\n{{ $json.message }}\n\nAnswer the customer's question.\n\nIf the customer is asking about an order and no Order ID is provided, ask for the Order ID.\n\nIf the customer is asking about company policies, then only answer using the provided policy information.\n\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a professional customer support representative.\n\nYou can answer general company questions if asked using the information below:\n\nCompany Policies:\n\n* Delivery usually takes 3-5 business days.\n* Returns are accepted within 7 days of delivery.\n* Refunds are processed within 5-7 business days.\n* Cash on Delivery (COD) is available in selected locations.\n* Support Email: customersupport@company.com\n* All products are 100% authentic.\n* Selected products include manufacturer warranty.\n* We currently ship only within India.\n* Name: Customer Support Team \n\nRules:\n\n* Be polite and professional.\n* If the customer asks about an order and does not provide an Order ID, ask for the Order ID.\n* Answer policy questions directly using the information above.\n* Do not invent information.\n* Keep responses concise and customer-friendly.\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        896,
+        608
+      ],
+      "id": "1840dd3d-394b-47a3-971c-6c8f93a081d1",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "amazon.nova-lite-v1:0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        976,
+        832
+      ],
+      "id": "d912bc9c-babb-4d1f-a4be-ba0104f7839b",
+      "name": "AWS Bedrock Chat Model1",
+      "credentials": {
+        "aws": {
+          "id": "o5AM5llRuJJXEoW6",
+          "name": "AWS (IAM) account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1248,
+        608
+      ],
+      "id": "9a4f215a-0fae-4b8d-91cc-311e18d8a875",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5f4bcc43-ed90-4de2-b825-17250424292d",
+              "leftValue": "={{ $json.found }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1472,
+        304
+      ],
+      "id": "4d726e06-68ea-4677-9354-96ba733ea860",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer Message:\n\n{{ $('Edit Fields').item.json.message }}\n\nOrder ID Provided:\n\n{{ $('Code in JavaScript').item.json.orderId }}\n\nNo matching order was found in the database.\n\nPolitely inform the customer that the Order ID could not be found and ask them to verify it.\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a professional customer support representative.\n\nRules:\n\n* Be polite and helpful.\n* Inform the customer if the provided Order ID could not be found.\n* Ask them to verify the Order ID.\n* Do not invent order details.\n* Keep responses concise and professional.\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1696,
+        512
+      ],
+      "id": "7d7d10b9-6a79-4f81-8a66-731f804c8afd",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "amazon.nova-lite-v1:0",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        1776,
+        736
+      ],
+      "id": "e3011283-94d9-4d39-a02d-4f991a888aad",
+      "name": "AWS Bedrock Chat Model2",
+      "credentials": {
+        "aws": {
+          "id": "o5AM5llRuJJXEoW6",
+          "name": "AWS (IAM) account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2048,
+        512
+      ],
+      "id": "d1c3cce7-7279-405f-8d48-ed4922a37db3",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    found: !!$json[\"Order ID\"],\n    ...$json\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        304
+      ],
+      "id": "70e3db6c-85e0-471d-9465-2850b9d736c0",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "python-requests/2.33.1",
+            "accept-encoding": "gzip, deflate, zstd",
+            "accept": "*/*",
+            "connection": "keep-alive",
+            "content-length": "74",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": "22345",
+            "session_id": "0fd0962c-90a2-4280-8b78-6d556321600f"
+          },
+          "webhookUrl": "http://localhost:5678/webhook/chatbot",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "0b76799d-ef3c-44be-85f8-f17489044850",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fb0a35aa7f7cba76319fa96f70d7d2ac238782dda19f0e594cede47b091abab2"
+  },
+  "id": "6T2RWSPLuy57Q00d",
+  "tags": []
+}
